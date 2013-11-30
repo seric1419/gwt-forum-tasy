@@ -2,9 +2,31 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	
+    <ui:style>
+        .table {
+			margin-top: 15pt;
+			float: right;
+		}
+    </ui:style>
+    
 	<g:DockLayoutPanel>
 	    <g:west size="700">
 	        <g:Label ui:field="forumTitle"/>
 	    </g:west>
+	    <g:east size="300">
+	        <g:HTMLPanel>
+	            <table class='{style.table}'>
+	                <tr>
+	                    <td><g:Label ui:field="loginLabel"/></td><td><g:TextBox ui:field="loginTextBox"/></td>
+	                </tr>
+	                <tr>
+	                    <td><g:Label ui:field="passwordLabel"/></td><td><g:PasswordTextBox ui:field="passwordTextBox"/></td>
+	                </tr>
+	                <tr>
+	                    <td/><td><g:Button ui:field="loginButton"/></td>
+	                </tr>
+	            </table>
+	        </g:HTMLPanel>
+	    </g:east>
 	</g:DockLayoutPanel>
 </ui:UiBinder> 
