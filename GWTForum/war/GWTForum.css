@@ -1,7 +1,20 @@
 .header {
-  font-size: 70pt;
-  font-weight: bold;
-  color: #777777;
-  margin: 10px 0px 70px;
-  text-align: left;
+	font-size: 70pt;
+	font-weight: bold;
+	color: #777777;
+	margin: 10px 0px 70px;
+	text-align: left;
+}
+
+.gwt-Button-right {
+	margin-top: 5px;
+	float: right;
+}
+
+.gwt-TextBox-login {
+	width: 100pt;
+}
+
+.gwt-PasswordTextBox-login {
+	width: 100pt;
 }
