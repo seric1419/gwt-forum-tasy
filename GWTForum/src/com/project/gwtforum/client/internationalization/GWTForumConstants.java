@@ -1,4 +1,4 @@
-package com.project.gwtforum.client;
+package com.project.gwtforum.client.internationalization;
 
 import com.google.gwt.i18n.client.Constants;
 
@@ -15,4 +15,7 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("GWT Forum")
 	String forumTitle();
+	
+	@DefaultStringValue("Rejestruj")
+	String register();
 }
