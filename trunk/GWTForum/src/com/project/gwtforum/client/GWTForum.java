@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.project.gwtforum.client.internationalization.GWTForumConstants;
 import com.project.gwtforum.client.widgets.Header;
 
 public class GWTForum implements EntryPoint{

@@ -7,6 +7,9 @@
 			margin-top: 15pt;
 			float: right;
 		}
+		.loginButtons {
+			float: right;
+		}
     </ui:style>
     
 	<g:DockLayoutPanel>
@@ -23,7 +26,11 @@
 	                    <td><g:Label ui:field="passwordLabel"/></td><td><g:PasswordTextBox ui:field="passwordTextBox"/></td>
 	                </tr>
 	                <tr>
-	                    <td/><td><g:Button ui:field="loginButton"/></td>
+	                    <td/><td class='{style.loginButtons}'>
+		                        <g:HorizontalPanel>
+		                            <g:Button ui:field="loginButton"/><g:Button ui:field="registerButton"/>
+		                        </g:HorizontalPanel>
+	                         </td>
 	                </tr>
 	            </table>
 	        </g:HTMLPanel>

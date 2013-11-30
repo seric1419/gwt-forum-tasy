@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.project.gwtforum.client.GWTForumConstants;
+import com.project.gwtforum.client.internationalization.GWTForumConstants;
 
 public class Header extends Composite{
 
@@ -31,6 +31,8 @@ public class Header extends Composite{
 		passwordTextBox.addStyleDependentName("login");
 		loginButton.setText(constants.login());
 		loginButton.addStyleDependentName("right");
+		registerButton.setText(constants.register());
+		registerButton.addStyleDependentName("right");
 	}
 
 	@UiField
@@ -50,6 +52,9 @@ public class Header extends Composite{
 	
 	@UiField
 	Button loginButton;
+	
+	@UiField
+	Button registerButton;
 
 	public Label getForumTitle() {
 		return forumTitle;
@@ -73,5 +78,9 @@ public class Header extends Composite{
 
 	public Button getLoginButton() {
 		return loginButton;
+	}
+	
+	public Button getRegisterButton() {
+		return registerButton;
 	}
 }
