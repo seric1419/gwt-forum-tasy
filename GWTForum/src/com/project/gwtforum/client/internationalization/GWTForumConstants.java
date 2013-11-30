@@ -18,4 +18,7 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Rejestruj")
 	String register();
+	
+	@DefaultStringValue("Potwierdź hasło")
+	String confirmPassword();
 }

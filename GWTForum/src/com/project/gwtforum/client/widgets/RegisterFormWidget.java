@@ -10,32 +10,24 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.gwtforum.client.GWTForum;
+import com.project.gwtforum.client.internationalization.GWTForumConstants;
 
-public class Header extends Composite{
+public class RegisterFormWidget extends Composite{
 
-	private static HeaderUiBinder uiBinder = GWT.create(HeaderUiBinder.class);
+	private static RegisterFormWidgetUiBinder uiBinder = GWT
+			.create(RegisterFormWidgetUiBinder.class);
 
-	interface HeaderUiBinder extends UiBinder<Widget, Header> {
+	interface RegisterFormWidgetUiBinder extends UiBinder<Widget, RegisterFormWidget> {
 	}
 
-	public Header() {
+	public RegisterFormWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		super.setSize("100em", "10em");
+		super.setSize("100em", "30em");
 		
-		forumTitle.setText(GWTForum.constants.forumTitle());
-		forumTitle.setStyleName("header");
 		loginLabel.setText(GWTForum.constants.login());
-		loginTextBox.addStyleDependentName("login");
 		passwordLabel.setText(GWTForum.constants.password());
-		passwordTextBox.addStyleDependentName("login");
-		loginButton.setText(GWTForum.constants.login());
-		loginButton.addStyleDependentName("right");
-		registerButton.setText(GWTForum.constants.register());
-		registerButton.addStyleDependentName("right");
+		confirmPasswordLabel.setText(GWTForum.constants.confirmPassword());
 	}
-
-	@UiField
-	Label forumTitle;
 	
 	@UiField
 	Label loginLabel;
@@ -50,14 +42,13 @@ public class Header extends Composite{
 	PasswordTextBox passwordTextBox;
 	
 	@UiField
-	Button loginButton;
+	Label confirmPasswordLabel;
+	
+	@UiField
+	PasswordTextBox confirmPasswordTextBox;
 	
 	@UiField
 	Button registerButton;
-
-	public Label getForumTitle() {
-		return forumTitle;
-	}
 
 	public Label getLoginLabel() {
 		return loginLabel;
@@ -75,20 +66,15 @@ public class Header extends Composite{
 		return passwordTextBox;
 	}
 
-	public Button getLoginButton() {
-		return loginButton;
+	public Label getConfirmPasswordLabel() {
+		return confirmPasswordLabel;
 	}
-	
+
+	public PasswordTextBox getConfirmPasswordTextBox() {
+		return confirmPasswordTextBox;
+	}
+
 	public Button getRegisterButton() {
 		return registerButton;
-	}
-	
-	public void setVisible(boolean visible) {
-		loginLabel.setVisible(visible);
-		loginTextBox.setVisible(visible);
-		passwordLabel.setVisible(visible);
-		passwordTextBox.setVisible(visible);
-		loginButton.setVisible(visible);
-		registerButton.setVisible(visible);
 	}
 }
