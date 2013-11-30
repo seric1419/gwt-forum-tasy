@@ -12,4 +12,7 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Hasło")
 	String password();
+	
+	@DefaultStringValue("GWT Forum")
+	String forumTitle();
 }

@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	
 	<g:DockLayoutPanel>
-	    <g:west size="300">
+	    <g:west size="700">
 	        <g:Label ui:field="forumTitle"/>
 	    </g:west>
 	</g:DockLayoutPanel>

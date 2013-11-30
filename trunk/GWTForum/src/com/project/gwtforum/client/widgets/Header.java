@@ -16,6 +16,7 @@ public class Header extends Composite{
 
 	public Header() {
 		initWidget(uiBinder.createAndBindUi(this));
+		super.setSize("90em", "10em");
 	}
 
 	@UiField

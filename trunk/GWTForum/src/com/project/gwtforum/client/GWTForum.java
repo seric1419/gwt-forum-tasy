@@ -20,8 +20,8 @@ public class GWTForum implements EntryPoint{
 		RootPanel.get("header").add(headerWidget);
 		Window.setTitle(constants.windowTitle());
 		
-		headerWidget.getForumTitle().setText(constants.windowTitle());
-		headerWidget.getForumTitle().setStyleName("h1");
+		headerWidget.getForumTitle().setText(constants.forumTitle());
+		headerWidget.getForumTitle().setStyleName("header");
 	}
 
 }
