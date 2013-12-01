@@ -85,7 +85,7 @@ public class RegisterForm {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			if(error){
+			if(!error){
 				History.newItem("index");
 			}
 			
