@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.gwtforum.client.GWTForum;
-import com.project.gwtforum.client.internationalization.GWTForumConstants;
 
 public class RegisterFormWidget extends Composite{
 
@@ -25,8 +24,12 @@ public class RegisterFormWidget extends Composite{
 		super.setSize("100em", "30em");
 		
 		loginLabel.setText(GWTForum.constants.login());
+		loginTextBox.addStyleDependentName("register");
 		passwordLabel.setText(GWTForum.constants.password());
+		passwordTextBox.addStyleDependentName("register");
 		confirmPasswordLabel.setText(GWTForum.constants.confirmPassword());
+		confirmPasswordTextBox.addStyleDependentName("register");
+		registerButton.setText(GWTForum.constants.complete());
 	}
 	
 	@UiField

@@ -18,3 +18,11 @@
 .gwt-PasswordTextBox-login {
 	width: 140pt;
 }
+
+.gwt-TextBox-register {
+	width: 150pt;
+}
+
+.gwt-PasswordTextBox-register {
+	width: 150pt;
+}

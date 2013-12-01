@@ -8,6 +8,7 @@
 			float: right;
 		}
 		.loginButtons {
+			margin-top: 5pt;
 			float: right;
 		}
     </ui:style>
