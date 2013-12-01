@@ -21,4 +21,10 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Potwierdź hasło")
 	String confirmPassword();
+	
+	@DefaultStringValue("Zatwierdź")
+	String complete();
+	
+	@DefaultStringValue("Zamknij")
+	String close();
 }
