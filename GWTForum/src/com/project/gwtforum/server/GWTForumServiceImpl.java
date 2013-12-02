@@ -18,25 +18,36 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 	public ResponseRpc<Boolean> register(String login, String password){
 		ResponseRpc<Boolean> response = new ResponseRpc<Boolean>();
 		
-		if (!login.matches("^[a-z0-9_-]{3,15}$")) {
+		if (!login.matches("^[a-z0-9_.-]{3,15}$")) {
+			String tag = "loginValidationError";
+			
+			if (login.length() < 3) {
+				response.addErrorMessage(tag, "tooShort");
+			}
+			else if (login.length() > 15) {
+				response.addErrorMessage(tag, "tooLong");
+			}
+			else {
+				response.addErrorMessage(tag, "excludedCharacters");
+			}
+			
 			response.setError(true);
-			response.setErrorMessage("loginValidationError");
 			response.setResponse(false);
 		}
 		if (password.length() < 8) {
 			response.setError(true);
-			response.setErrorMessage("passwordValidationError");
+			response.addErrorMessage("passwordValidationError", "");
 			response.setResponse(false);
 		}
 		try {
 			if (Database.getInstance().getUsersDao().queryBuilder().where().eq("login", login).query().size() > 0) {
 				response.setError(true);
-				response.setErrorMessage("loginInUse");
+				response.addErrorMessage("loginInUse", "");
 				response.setResponse(false);
 			}
 		} catch (SQLException e1) {
 			response.setError(true);
-			response.setErrorMessage(e1.getMessage());
+			response.addErrorMessage("unknown", e1.getMessage());
 			response.setResponse(false);
 		}
 		
@@ -53,7 +64,7 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 				Database.getInstance().getUsersDao().create(user);
 			} catch (SQLException e) {
 				response.setError(true);
-				response.setErrorMessage(e.getMessage());
+				response.addErrorMessage("unknown", e.getMessage());
 				response.setResponse(false);
 			}
 		}

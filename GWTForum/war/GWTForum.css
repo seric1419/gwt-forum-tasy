@@ -26,3 +26,21 @@
 .gwt-PasswordTextBox-register {
 	width: 150pt;
 }
+
+.boldText {
+	margin: 5pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+.gwt-TextBox-error {
+	width: 150pt;
+	border-color: #FF0000;
+	background-color: #FF9999;
+}
+
+.gwt-PasswordTextBox-error {
+	width: 150pt;
+	border-color: #FF0000;
+	background-color: #FF9999;
+}
