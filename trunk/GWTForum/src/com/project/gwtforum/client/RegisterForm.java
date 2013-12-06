@@ -29,6 +29,8 @@ public class RegisterForm {
 	public RegisterForm() {
 		widget.getRegisterButton().addClickHandler(completeHandler);
 		widget.getConfirmPasswordTextBox().addKeyDownHandler(onEnterHandler);
+		widget.getPasswordTextBox().addKeyDownHandler(onEnterHandler);
+		widget.getLoginTextBox().addKeyDownHandler(onEnterHandler);
 		
 		loadingPopup.add(new Label(GWTForum.messages.loading()));
 		loadingPopup.setGlassEnabled(true);
