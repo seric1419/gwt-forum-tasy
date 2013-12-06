@@ -1,2 +1,3 @@
 # Module gwtforum
 # RPC service class, partial path of RPC policy file
+com.project.gwtforum.client.GWTForumService, C8C24B206AAD7CF71E536A7CFF40B025.gwt.rpc
