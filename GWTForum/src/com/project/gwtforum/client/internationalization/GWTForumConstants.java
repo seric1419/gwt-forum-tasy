@@ -27,4 +27,7 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Zamknij")
 	String close();
+	
+	@DefaultStringValue("Wyloguj")
+	String logout();
 }

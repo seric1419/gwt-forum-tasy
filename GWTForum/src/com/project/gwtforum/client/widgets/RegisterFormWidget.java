@@ -23,13 +23,13 @@ public class RegisterFormWidget extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		super.setSize("100em", "30em");
 		
-		loginLabel.setText(GWTForum.constants.login());
+		loginLabel.setText(GWTForum.CONSTANTS.login());
 		loginTextBox.addStyleDependentName("register");
-		passwordLabel.setText(GWTForum.constants.password());
+		passwordLabel.setText(GWTForum.CONSTANTS.password());
 		passwordTextBox.addStyleDependentName("register");
-		confirmPasswordLabel.setText(GWTForum.constants.confirmPassword());
+		confirmPasswordLabel.setText(GWTForum.CONSTANTS.confirmPassword());
 		confirmPasswordTextBox.addStyleDependentName("register");
-		registerButton.setText(GWTForum.constants.complete());
+		registerButton.setText(GWTForum.CONSTANTS.complete());
 	}
 	
 	@UiField

@@ -9,6 +9,16 @@ public interface GWTForumMessages extends Messages{
 	@DefaultMessage("Rejestracja przebiegła poprawnie.")
 	String registrationSuccess();
 	
+	/*
+	 * Errors
+	 */
+	
+	@DefaultMessage("Podane hasło lub login są nieprawidłowe.")
+	String loginError();
+	
+	@DefaultMessage("Wystąpił nieznany błąd.")
+	String unknownError();
+	
 	@DefaultMessage("Login jest zbyt krótki. Musi się on składać z przynajmniej 3 znaków.")
 	String tooShortLogin();
 	
@@ -23,9 +33,6 @@ public interface GWTForumMessages extends Messages{
 	
 	@DefaultMessage("Podany login jest już zajęty.")
 	String loginInUse();
-	
-	@DefaultMessage("Wystąpił nieznany błąd.")
-	String unknownError();
 	
 	@DefaultMessage("Podane hasła nie są takie same")
 	String differentPass();

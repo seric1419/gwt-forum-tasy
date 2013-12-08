@@ -23,7 +23,7 @@ public class Database {
 	
 	private Dao<Reply, Integer> repliesDao;
 	
-	private static Database instance;
+	private static Database instance = new Database();
 	
 	private Database(){
 		try {
@@ -43,7 +43,7 @@ public class Database {
 	
 	private void setupDatabase() throws SQLException{
 		usersDao = DaoManager.createDao(connectionSource, User.class);
-		TableUtils.createTable(connectionSource, User.class);
+		TableUtils.createTableIfNotExists(connectionSource, User.class);
 		
 		categoriesDao = DaoManager.createDao(connectionSource, Category.class);
 		TableUtils.createTable(connectionSource, Category.class);
