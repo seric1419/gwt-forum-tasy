@@ -1,19 +1,122 @@
 package com.project.gwtforum.server;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.project.gwtforum.client.GWTForumService;
 import com.project.gwtforum.server.database.BCrypt;
+import com.project.gwtforum.server.database.Category;
 import com.project.gwtforum.server.database.Database;
+import com.project.gwtforum.server.database.Forum;
+import com.project.gwtforum.server.database.Thread;
+import com.project.gwtforum.server.database.Reply;
 import com.project.gwtforum.server.database.Role;
 import com.project.gwtforum.server.database.User;
+import com.project.gwtforum.shared.CategoryRpc;
+import com.project.gwtforum.shared.ForumRpc;
+import com.project.gwtforum.shared.ReplyRpc;
 import com.project.gwtforum.shared.ResponseRpc;
+import com.project.gwtforum.shared.ThreadRpc;
 
 public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForumService{
 
 	private static final long serialVersionUID = 669987357819776292L;
 
+	public ResponseRpc<ReplyRpc> getReplies(int id){
+		
+		ReplyRpc reply = new ReplyRpc();
+		ArrayList<ReplyRpc> responseCollection = new ArrayList<ReplyRpc>();
+		ResponseRpc<ReplyRpc> response = new ResponseRpc<>();
+		
+		try {
+			List<Reply> dbReplies = Database.getInstance().getRepliesDao().queryBuilder().where().eq("threadId", id).query();
+			for(Reply i : dbReplies){
+				reply.setId(i.getId());
+				reply.setName(i.getName());
+				responseCollection.add(reply);
+			}
+			response.setResponseCollection(responseCollection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	public ResponseRpc<ThreadRpc> getThreads(int id){
+		
+		ThreadRpc thread = new ThreadRpc();
+		ArrayList<ThreadRpc> responseCollection = new ArrayList<ThreadRpc>();
+		ResponseRpc<ThreadRpc> response = new ResponseRpc<>();
+		
+		try {
+			List<Thread> dbThreads = Database.getInstance().getThreadsDao().queryBuilder().where().eq("forumId", id).query();
+			for(Thread i : dbThreads){
+				thread.setId(i.getId());
+				thread.setName(i.getName());
+				responseCollection.add(thread);
+			}
+			response.setResponseCollection(responseCollection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	public ResponseRpc<ForumRpc> getForums(int id){
+		
+		ForumRpc forum = new ForumRpc();
+		ArrayList<ForumRpc> responseCollection = new ArrayList<ForumRpc>();
+		ResponseRpc<ForumRpc> response = new ResponseRpc<>();
+		
+		try {
+			List<Forum> dbForums = Database.getInstance().getForumsDao().queryBuilder().where().eq("categoryId", id).query();
+			for(Forum i : dbForums){
+				forum.setId(i.getId());
+				forum.setName(i.getName());
+				responseCollection.add(forum);
+			}
+			response.setResponseCollection(responseCollection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	public ResponseRpc<CategoryRpc> getCategories(){
+		
+		CategoryRpc category = new CategoryRpc();
+		ArrayList<CategoryRpc> responseCollection = new ArrayList<CategoryRpc>();
+		ResponseRpc<CategoryRpc> response = new ResponseRpc<>();
+		
+		try {
+			List<Category> dbCategories = Database.getInstance().getCategoriesDao().queryForAll();
+			for(Category i : dbCategories){
+				category.setId(i.getId());
+				category.setName(i.getName());
+				responseCollection.add(category);
+			}
+			response.setResponseCollection(responseCollection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	
 	@Override
 	public ResponseRpc<Boolean> register(String login, String password){
 		ResponseRpc<Boolean> response = new ResponseRpc<Boolean>();

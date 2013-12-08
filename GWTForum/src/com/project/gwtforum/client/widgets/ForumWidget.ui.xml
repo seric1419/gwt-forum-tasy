@@ -5,5 +5,7 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
+		<g:Label ui:field="forumTitle" />
+		<g:VerticalPanel ui:field="forumPanel"></g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
