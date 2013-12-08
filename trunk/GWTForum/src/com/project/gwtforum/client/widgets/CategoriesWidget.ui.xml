@@ -8,5 +8,6 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:Label styleName="{style.important}" ui:field="categoryTitle" />
+		<g:VerticalPanel ui:field="categoryPanel"></g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

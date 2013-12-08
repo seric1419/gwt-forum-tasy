@@ -5,6 +5,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CategoriesWidget extends Composite {
@@ -19,10 +20,28 @@ public class CategoriesWidget extends Composite {
 	public CategoriesWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		
-		categoryTitle.setText("Kategorie:");
 	}
-
+	
 	@UiField
 	Label categoryTitle;
+	
+	@UiField
+	VerticalPanel categoryPanel;
+
+	public Label getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	public void setCategoryTitle(String text) {
+		this.categoryTitle.setText(text);
+	}
+
+	public VerticalPanel getCategoryPanel() {
+		return categoryPanel;
+	}
+
+	public void setCategoryPanel(VerticalPanel categoryPanel) {
+		this.categoryPanel = categoryPanel;
+	}
 
 }

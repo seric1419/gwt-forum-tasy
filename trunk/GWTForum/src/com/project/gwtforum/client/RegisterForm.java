@@ -64,7 +64,6 @@ public class RegisterForm {
 					responsePopup.center();
 				}
 				else {
-					error = true;
 					loadingPopup.hide();
 					String message = "";
 					

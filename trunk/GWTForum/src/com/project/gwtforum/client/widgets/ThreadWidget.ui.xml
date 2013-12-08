@@ -5,5 +5,7 @@
 		
 	</ui:style>
 	<g:HTMLPanel>
+		<g:Label ui:field="threadTitle" />
+		<g:VerticalPanel ui:field="threadPanel"></g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
