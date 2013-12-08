@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.project.gwtforum.client.GWTForumService;
 import com.project.gwtforum.server.database.BCrypt;
@@ -39,7 +42,6 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 			}
 			response.setResponseCollection(responseCollection);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			response.setError(true);
 			response.addErrorMessage("unknown", e.getMessage());
 		}
@@ -62,7 +64,6 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 			}
 			response.setResponseCollection(responseCollection);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			response.setError(true);
 			response.addErrorMessage("unknown", e.getMessage());
 		}
@@ -85,7 +86,6 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 			}
 			response.setResponseCollection(responseCollection);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			response.setError(true);
 			response.addErrorMessage("unknown", e.getMessage());
 		}
@@ -108,7 +108,6 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 			}
 			response.setResponseCollection(responseCollection);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			response.setError(true);
 			response.addErrorMessage("unknown", e.getMessage());
 		}
@@ -171,6 +170,63 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 				response.setResponse(false);
 			}
 		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<Boolean> login(String login, String password) {
+		ResponseRpc<Boolean> response = new ResponseRpc<Boolean>();
+		
+		try {
+			List<User> users = Database.getInstance().getUsersDao().queryBuilder().where().eq("login", login).query();
+			
+			if (users.size() == 0) {
+				response.setError(true);
+				response.addErrorMessage("wrongLogin", "");
+				response.setResponse(false);
+			}
+			
+			if (!response.isError()) {
+				User user = users.get(0);
+				
+				if (BCrypt.checkpw(password, user.getPassword())) {
+					String sessionId = SessionManager.getInstance().addSessionForUser(user.getId());
+					
+					HttpServletRequest request = this.getThreadLocalRequest();
+					HttpSession httpSession = request.getSession(true);
+					httpSession.setAttribute("sessionId", sessionId);
+					
+					response.setResponse(true);
+				}
+				else {
+					response.setError(true);
+					response.addErrorMessage("wrongPassword", "");
+					response.setResponse(false);
+				}
+			}
+			
+		} catch (SQLException e) {
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
+			response.setResponse(false);
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<Boolean> logout() {
+		ResponseRpc<Boolean> response = new ResponseRpc<Boolean>();
+		
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession httpSession = request.getSession(true);
+		
+		String sessionId = (String)httpSession.getAttribute("sessionId");
+		SessionManager.getInstance().removeSession(sessionId);
+		httpSession.removeAttribute("sessionId");
+		
+		response.setResponse(true);
 		
 		return response;
 	}

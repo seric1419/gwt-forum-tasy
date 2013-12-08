@@ -11,27 +11,29 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.project.gwtforum.client.GWTForum;
 
-public class Header extends Composite{
+public class HeaderWidget extends Composite{
 
-	private static HeaderUiBinder uiBinder = GWT.create(HeaderUiBinder.class);
+	private static HeaderWidgetUiBinder uiBinder = GWT.create(HeaderWidgetUiBinder.class);
 
-	interface HeaderUiBinder extends UiBinder<Widget, Header> {
+	interface HeaderWidgetUiBinder extends UiBinder<Widget, HeaderWidget> {
 	}
 
-	public Header() {
+	public HeaderWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		super.setSize("100em", "10em");
 		
-		forumTitle.setText(GWTForum.constants.forumTitle());
+		forumTitle.setText(GWTForum.CONSTANTS.forumTitle());
 		forumTitle.setStyleName("header");
-		loginLabel.setText(GWTForum.constants.login());
+		loginLabel.setText(GWTForum.CONSTANTS.login());
 		loginTextBox.addStyleDependentName("login");
-		passwordLabel.setText(GWTForum.constants.password());
+		passwordLabel.setText(GWTForum.CONSTANTS.password());
 		passwordTextBox.addStyleDependentName("login");
-		loginButton.setText(GWTForum.constants.login());
+		loginButton.setText(GWTForum.CONSTANTS.login());
 		loginButton.addStyleDependentName("right");
-		registerButton.setText(GWTForum.constants.register());
+		registerButton.setText(GWTForum.CONSTANTS.register());
 		registerButton.addStyleDependentName("right");
+		logoutButton.setVisible(false);
+		logoutButton.setText(GWTForum.CONSTANTS.logout());
 	}
 
 	@UiField
@@ -48,6 +50,9 @@ public class Header extends Composite{
 	
 	@UiField
 	PasswordTextBox passwordTextBox;
+	
+	@UiField
+	Button logoutButton;
 	
 	@UiField
 	Button loginButton;
@@ -74,6 +79,10 @@ public class Header extends Composite{
 	public PasswordTextBox getPasswordTextBox() {
 		return passwordTextBox;
 	}
+	
+	public Button getLogoutButton() {
+		return logoutButton;
+	}
 
 	public Button getLoginButton() {
 		return loginButton;
@@ -90,5 +99,6 @@ public class Header extends Composite{
 		passwordTextBox.setVisible(visible);
 		loginButton.setVisible(visible);
 		registerButton.setVisible(visible);
+		logoutButton.setVisible(!visible);
 	}
 }
