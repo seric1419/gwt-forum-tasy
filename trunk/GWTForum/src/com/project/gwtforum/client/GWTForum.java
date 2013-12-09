@@ -6,9 +6,11 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.project.gwtforum.client.internationalization.GWTForumConstants;
 import com.project.gwtforum.client.internationalization.GWTForumMessages;
+import com.project.gwtforum.shared.ResponseRpc;
 
 public class GWTForum implements EntryPoint{
 
@@ -19,11 +21,16 @@ public class GWTForum implements EntryPoint{
 	
 	private HeaderForm header = new HeaderForm();
 	private RegisterForm registerForm;
+	private CategoriesPage categoriesPage;
+	private AdminPage adminPage;
+	
+	private AsyncCallback<ResponseRpc<Boolean>> adminCallback;
 	
 	
 	@Override
 	public void onModuleLoad() {
 		initializeLayout();
+		initializeCallbacks();
 		
 		History.newItem("index");
 		History.addValueChangeHandler(historyHandler);
@@ -34,13 +41,48 @@ public class GWTForum implements EntryPoint{
 		Window.setTitle(CONSTANTS.windowTitle());
 	}
 	
+	private void initializeCallbacks() {
+		adminCallback = new AsyncCallback<ResponseRpc<Boolean>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(ResponseRpc<Boolean> result) {
+				
+				if (!result.isError() && result.getResponse()) {
+					if (adminPage == null) {
+						adminPage = new AdminPage();
+					}
+					
+					RootPanel.get("adminPanel").add(adminPage.getWidget());
+				}
+			}
+		};
+	}
+	
 	private void openRegisterForm() {
-		if (registerForm == null){
+		if (registerForm == null) {
 			registerForm = new RegisterForm();
 		}
 		
 		RootPanel.get("contents").add(registerForm.getWidget());
 		header.getWidget().getRegisterButton().setVisible(false);
+	}
+	
+	private void openCategories() {
+		if (categoriesPage == null) {
+			categoriesPage = new CategoriesPage();
+		}
+		
+		RootPanel.get("contents").add(categoriesPage.getWidget());
+		loadAdminPanel();
+	}
+	
+	private void loadAdminPanel() {
+		GWTFORUM_SERVICE.isAdmin(adminCallback);
 	}
 	
 	private ValueChangeHandler<String> historyHandler = new ValueChangeHandler<String>() {
@@ -56,8 +98,11 @@ public class GWTForum implements EntryPoint{
 			else if (token.equals("register")) {
 				openRegisterForm();
 			}
-			else if (token.equals("logedInIndex")) {
-				// TODO index po zalogowaniu
+			else if (token.equals("categories")) {
+				openCategories();
+			}
+			else if (token.contains("forum-")) {
+				// TODO parsuj numer forum i wyswietl forum o odpowiednim ID
 			}
 		}
 	};

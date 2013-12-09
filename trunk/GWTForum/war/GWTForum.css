@@ -6,6 +6,53 @@
 	text-align: left;
 }
 
+.boldText {
+	margin: 5pt;
+	font-weight: bold;
+	text-align: center;
+}
+
+.categoryHeader {
+	font-size: 30pt;
+	font-weight: bold;
+	color: #777777;
+	margin: 60px 50px 20px;
+	text-align: left;
+}
+
+.bordered {
+	border: 1px solid silver;
+	margin-bottom: 5pt;
+}
+
+.gwt-Anchor:link {
+	font-size: 15pt;
+	font-weight: bold;
+	text-decoration: italic;
+	color: black;
+}
+
+.gwt-Anchor:visited {
+	font-size: 15pt;
+	font-weight: bold;
+	text-decoration: italic;
+	color: black;
+}
+
+.gwt-Anchor:hover {
+	font-size: 15pt;
+	font-weight: bold;
+	text-decoration: italic;
+	color: black;
+}
+
+.gwt-Anchor:hover {
+	font-size: 15pt;
+	font-weight: bold;
+	text-decoration: italic;
+	color: black;
+}
+
 .gwt-Button-right {
 	margin-top: 5px;
 	float: right;
@@ -27,10 +74,8 @@
 	width: 150pt;
 }
 
-.boldText {
-	margin: 5pt;
-	font-weight: bold;
-	text-align: center;
+.gwt-ListBox-wide {
+	width: 150pt;
 }
 
 .gwt-TextBox-error {

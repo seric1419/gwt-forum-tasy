@@ -18,6 +18,9 @@ public class User {
 	@DatabaseField(canBeNull = false)
 	private Role role;
 	
+	@DatabaseField
+	int postsNumber;
+	
 	public User() {
 		
 	}
@@ -26,12 +29,14 @@ public class User {
 		this.login = login;
 		this.password = passwordHash;
 		this.role = Role.User;
+		postsNumber = 0;
 	}
 	
 	public User(String login, String passwordHash, Role role) {
 		this.login = login;
 		this.password = passwordHash;
 		this.role = role;
+		postsNumber = 0;
 	}
 
 	public int getId() {
@@ -64,5 +69,13 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public int getPostsNumber(){
+		return postsNumber;
+	}
+	
+	public void setPostsNumber(int postsNumber) {
+		this.postsNumber = postsNumber;
 	}
 }

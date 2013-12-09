@@ -36,4 +36,7 @@ public interface GWTForumMessages extends Messages{
 	
 	@DefaultMessage("Podane hasła nie są takie same")
 	String differentPass();
+	
+	@DefaultMessage("Brak uprawnień lub nie jesteś zalogowany/a.")
+	String userPermissionError();
 }
