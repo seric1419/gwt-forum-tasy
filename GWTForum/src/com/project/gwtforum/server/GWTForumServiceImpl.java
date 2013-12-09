@@ -28,88 +28,202 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 	private static final long serialVersionUID = 669987357819776292L;
 
 	public ResponseRpc<ReplyRpc> getReplies(int id){
-		
-		ReplyRpc reply = new ReplyRpc();
-		ArrayList<ReplyRpc> responseCollection = new ArrayList<ReplyRpc>();
 		ResponseRpc<ReplyRpc> response = new ResponseRpc<>();
 		
-		try {
-			List<Reply> dbReplies = Database.getInstance().getRepliesDao().queryBuilder().where().eq("threadId", id).query();
-			for(Reply i : dbReplies){
-				reply.setId(i.getId());
-				reply.setName(i.getName());
-				responseCollection.add(reply);
+		if (isLoggedIn()) {
+			ArrayList<ReplyRpc> responseCollection = new ArrayList<ReplyRpc>();
+			
+			try {
+				List<Reply> dbReplies = Database.getInstance().getRepliesDao().queryBuilder().where().eq("threadId", id).query();
+				
+				if (dbReplies != null) {
+					for(Reply i : dbReplies){
+						ReplyRpc reply = new ReplyRpc();
+						reply.setId(i.getId());
+						reply.setName(i.getName());
+						responseCollection.add(reply);
+					}
+					response.setResponseCollection(responseCollection);
+				}
+				else {
+					response.setResponseCollection(new ArrayList<ReplyRpc>());
+				}
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
 			}
-			response.setResponseCollection(responseCollection);
-		} catch (SQLException e) {
+		}
+		else {
 			response.setError(true);
-			response.addErrorMessage("unknown", e.getMessage());
+			response.addErrorMessage("notLoggedIn", "");
 		}
 		
 		return response;
 	}
 	
 	public ResponseRpc<ThreadRpc> getThreads(int id){
-		
-		ThreadRpc thread = new ThreadRpc();
-		ArrayList<ThreadRpc> responseCollection = new ArrayList<ThreadRpc>();
 		ResponseRpc<ThreadRpc> response = new ResponseRpc<>();
 		
-		try {
-			List<Thread> dbThreads = Database.getInstance().getThreadsDao().queryBuilder().where().eq("forumId", id).query();
-			for(Thread i : dbThreads){
-				thread.setId(i.getId());
-				thread.setName(i.getName());
-				responseCollection.add(thread);
+		if(isLoggedIn()) {
+			ArrayList<ThreadRpc> responseCollection = new ArrayList<ThreadRpc>();
+			
+			try {
+				List<Thread> dbThreads = Database.getInstance().getThreadsDao().queryBuilder().where().eq("forumId", id).query();
+				
+				if (dbThreads != null) {
+					for(Thread i : dbThreads){
+						ThreadRpc thread = new ThreadRpc();
+						thread.setId(i.getId());
+						thread.setName(i.getName());
+						responseCollection.add(thread);
+					}
+					response.setResponseCollection(responseCollection);
+				}
+				else {
+					response.setResponseCollection(new ArrayList<ThreadRpc>());
+				}
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
 			}
-			response.setResponseCollection(responseCollection);
-		} catch (SQLException e) {
+		}
+		else {
 			response.setError(true);
-			response.addErrorMessage("unknown", e.getMessage());
+			response.addErrorMessage("notLoggedIn", "");
 		}
 		
 		return response;
 	}
 	
 	public ResponseRpc<ForumRpc> getForums(int id){
-		
-		ForumRpc forum = new ForumRpc();
-		ArrayList<ForumRpc> responseCollection = new ArrayList<ForumRpc>();
 		ResponseRpc<ForumRpc> response = new ResponseRpc<>();
 		
-		try {
-			List<Forum> dbForums = Database.getInstance().getForumsDao().queryBuilder().where().eq("categoryId", id).query();
-			for(Forum i : dbForums){
-				forum.setId(i.getId());
-				forum.setName(i.getName());
-				responseCollection.add(forum);
+		if (isLoggedIn()) {
+			ArrayList<ForumRpc> responseCollection = new ArrayList<ForumRpc>();
+			
+			try {
+				List<Forum> dbForums = Database.getInstance().getForumsDao().queryBuilder().where().eq("categoryId", id).query();
+				
+				if (dbForums != null) {
+					for(Forum i : dbForums){
+						ForumRpc forum = new ForumRpc();
+						forum.setId(i.getId());
+						forum.setName(i.getName());
+						responseCollection.add(forum);
+					}
+					response.setResponseCollection(responseCollection);
+				}
+				else {
+					response.setResponseCollection(new ArrayList<ForumRpc>());
+				}
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
 			}
-			response.setResponseCollection(responseCollection);
-		} catch (SQLException e) {
+		}
+		else {
 			response.setError(true);
-			response.addErrorMessage("unknown", e.getMessage());
+			response.addErrorMessage("notLoggedIn", "");
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<ForumRpc> saveForum(ForumRpc newForum) {
+		ResponseRpc<ForumRpc> response = new ResponseRpc<ForumRpc>();
+		
+		if (isAdmin().getResponse()) {
+			Forum forum = new Forum();
+			
+			forum.setName(newForum.getName());
+			forum.setCategoryId(newForum.getCategoryId());
+			
+			try {
+				Database.getInstance().getForumsDao().create(forum);
+				
+				response.setResponseCollection(getForums(newForum.getCategoryId()).getResponseCollection());
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+			}
+		}
+		else {
+			response.setError(true);
+			
+			if (isLoggedIn()) {
+				response.addErrorMessage("noPermissions", "");
+			}
+			else {
+				response.addErrorMessage("notLoggedIn", "");
+			}
 		}
 		
 		return response;
 	}
 	
 	public ResponseRpc<CategoryRpc> getCategories(){
-		
-		CategoryRpc category = new CategoryRpc();
-		ArrayList<CategoryRpc> responseCollection = new ArrayList<CategoryRpc>();
 		ResponseRpc<CategoryRpc> response = new ResponseRpc<>();
 		
-		try {
-			List<Category> dbCategories = Database.getInstance().getCategoriesDao().queryForAll();
-			for(Category i : dbCategories){
-				category.setId(i.getId());
-				category.setName(i.getName());
-				responseCollection.add(category);
+		if (isLoggedIn()) {
+			ArrayList<CategoryRpc> responseCollection = new ArrayList<CategoryRpc>();
+			
+			try {
+				List<Category> dbCategories = Database.getInstance().getCategoriesDao().queryForAll();
+				
+				if (dbCategories != null) {
+					for(Category i : dbCategories){
+						CategoryRpc category = new CategoryRpc();
+						category.setId(i.getId());
+						category.setName(i.getName());
+						responseCollection.add(category);
+					}
+					response.setResponseCollection(responseCollection);
+				}
+				else {
+					response.setResponseCollection(new ArrayList<CategoryRpc>());
+				}
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
 			}
-			response.setResponseCollection(responseCollection);
-		} catch (SQLException e) {
+		}
+		else {
 			response.setError(true);
-			response.addErrorMessage("unknown", e.getMessage());
+			response.addErrorMessage("notLoggedIn", "");
+		}
+		
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<CategoryRpc> saveCategory(CategoryRpc newCategory) {
+		ResponseRpc<CategoryRpc> response = new ResponseRpc<CategoryRpc>();
+		
+		if (isAdmin().getResponse()) {
+			Category category = new Category();
+			
+			category.setName(newCategory.getName());
+			
+			try {
+				Database.getInstance().getCategoriesDao().create(category);
+				
+				response.setResponseCollection(getCategories().getResponseCollection());
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+			}
+		}
+		else {
+			response.setError(true);
+			
+			if (isLoggedIn()) {
+				response.addErrorMessage("noPermissions", "");
+			}
+			else {
+				response.addErrorMessage("notLoggedIn", "");
+			}
 		}
 		
 		return response;
@@ -229,5 +343,59 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 		response.setResponse(true);
 		
 		return response;
+	}
+	
+	@Override
+	public ResponseRpc<Boolean> isAdmin() {
+		ResponseRpc<Boolean> response = new ResponseRpc<Boolean>();
+		
+		if (isLoggedIn()) {
+			HttpServletRequest request = this.getThreadLocalRequest();
+			HttpSession session = request.getSession();
+			
+			String sessionId = (String)session.getAttribute("sessionId");
+			
+			int userId = SessionManager.getInstance().getUserIdFromSessionId(sessionId);
+			
+			try {
+				User user = Database.getInstance().getUsersDao().queryForId(userId);
+				
+				if (user.getRole() == Role.Administrator) {
+					response.setResponse(true);
+				}
+				else {
+					response.setResponse(false);
+				}
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+				response.setResponse(false);
+			}
+		}
+		else {
+			response.setError(true);
+			response.addErrorMessage("notLoggedIn", "");
+			response.setResponse(false);
+		}
+		
+		return response;
+	}
+	
+	private boolean isLoggedIn() {
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession(false);
+		
+		if (session != null) {
+			String sessionId = (String)session.getAttribute("sessionId");
+			
+			if (sessionId != null) {
+				if (SessionManager.getInstance().isViable(sessionId)) {
+					return true;
+				}
+				return false;
+			}
+			return false;
+		}
+		return false;
 	}
 }

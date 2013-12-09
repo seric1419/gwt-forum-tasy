@@ -30,4 +30,19 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Wyloguj")
 	String logout();
+	
+	@DefaultStringValue("Kategoria")
+	String category();
+	
+	@DefaultStringValue("Forum")
+	String forum();
+	
+	@DefaultStringValue("Nazwa")
+	String name();
+	
+	@DefaultStringValue("Sekcja")
+	String section();
+	
+	@DefaultStringValue("Zapisz")
+	String save();
 }

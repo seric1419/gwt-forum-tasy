@@ -12,7 +12,7 @@ public class Forum {
 	@DatabaseField(canBeNull = false)
 	private String name;
 	
-	@DatabaseField(canBeNull = false)
+	@DatabaseField
 	private String about;
 	
 	@DatabaseField(canBeNull = false)
@@ -52,4 +52,11 @@ public class Forum {
 		this.about = about;
 	}
 
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
 }

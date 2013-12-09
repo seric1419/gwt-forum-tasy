@@ -1,11 +1,16 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-		
-	</ui:style>
+	
+    <ui:style>
+        .text {
+			font-size: 20pt;
+			font-weight: bold;
+			margin-left: 90px;
+		}
+    </ui:style>
+    
 	<g:HTMLPanel>
-		<g:Label ui:field="forumTitle" />
-		<g:VerticalPanel ui:field="forumPanel"></g:VerticalPanel>
+		<g:Anchor styleName="{style.text}" ui:field="forumLink" />
 	</g:HTMLPanel>
 </ui:UiBinder> 

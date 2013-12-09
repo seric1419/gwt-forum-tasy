@@ -1,11 +1,13 @@
 package com.project.gwtforum.client.widgets;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ForumWidget extends Composite {
@@ -16,30 +18,34 @@ public class ForumWidget extends Composite {
 	interface ForumWidgetUiBinder extends UiBinder<Widget, ForumWidget> {
 	}
 
-	public ForumWidget() {
+	public ForumWidget(int forumId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.forumId = forumId;
+		forumLink.addClickHandler(clickHandler);
 	}
 
 	@UiField
-	Label forumTitle;
+	Anchor forumLink;
 	
-	@UiField
-	VerticalPanel forumPanel;
+	private int forumId;
 
-	public Label getForumTitle() {
-		return forumTitle;
-	}
-
-	public void setForumTitle(String text) {
-		this.forumTitle.setText(text);
-	}
-
-	public VerticalPanel getForumPanel() {
-		return forumPanel;
-	}
-
-	public void setForumPanel(VerticalPanel forumPanel) {
-		this.forumPanel = forumPanel;
+	public Anchor getForumLink() {
+		return forumLink;
 	}
 	
+	public void setForumId(int forumId) {
+		this.forumId = forumId;
+	}
+	
+	public int getForumId() {
+		return forumId;
+	}
+	
+	private ClickHandler clickHandler = new ClickHandler() {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			History.newItem("forum-" + forumId);
+		}
+	};
 }

@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.project.gwtforum.client.widgets.HeaderWidget;
 import com.project.gwtforum.client.widgets.InfoPopup;
 import com.project.gwtforum.client.widgets.LoadingPopup;
@@ -45,9 +46,8 @@ public class HeaderForm {
 				
 				if (!result.isError()) {
 					LoadingPopup.getInstance().hide();
-					InfoPopup.getInstance().setText("Sukces!");
-					InfoPopup.getInstance().center();
 					widget.setVisible(false);
+					History.newItem("categories");
 				}
 				else {
 					String message = "";
@@ -84,9 +84,8 @@ public class HeaderForm {
 				LoadingPopup.getInstance().hide();
 				
 				if (!result.isError()) {
-					InfoPopup.getInstance().setText("Wylogowano!");
-					InfoPopup.getInstance().center();
 					widget.setVisible(true);
+					RootPanel.get("adminPanel").clear();
 				}
 				else {
 					InfoPopup.getInstance().setText(GWTForum.MESSAGES.unknownError());

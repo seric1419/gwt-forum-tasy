@@ -6,7 +6,7 @@ import com.project.gwtforum.client.GWTForum;
 
 public class LoadingPopup extends PopupPanel {
 
-	public static LoadingPopup instance = new LoadingPopup();
+	private static LoadingPopup instance = new LoadingPopup();
 	
 	private LoadingPopup () {
 		add(new Label(GWTForum.MESSAGES.loading()));
