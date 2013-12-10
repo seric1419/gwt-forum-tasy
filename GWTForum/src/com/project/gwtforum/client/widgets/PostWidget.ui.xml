@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+        xmlns:g="urn:import:com.google.gwt.user.client.ui">
+        <ui:style>
+		.margined{
+			margin-top: 10pt;
+			margin-left: 20pt;
+			margin-bottom: 20pt;
+			font-size: 13pt;
+		}
+		.marginedText{
+			margin-top: 10pt;
+			margin-left: 10pt;
+			margin-bottom: 10pt;
+			margin-right: 10pt;
+		}
+        </ui:style>
+        <g:HTMLPanel width="100%">
+            <g:HorizontalPanel width="100%">
+                <g:VerticalPanel styleName="bordered" height="150px">
+                    <g:Label styleName="{style.marginedText}" ui:field="usernameLabel"/>
+                    <g:HorizontalPanel>
+                        <g:Label styleName="{style.marginedText}" text="Posts: " ui:field="numberOfPostsLabel"/><g:Label styleName="{style.marginedText}" ui:field="numberOfPostsValue"/>
+                    </g:HorizontalPanel>
+                </g:VerticalPanel>
+	            <g:VerticalPanel width="100%">
+	                <g:VerticalPanel styleName="bordered" width="100%">
+	                    <g:Button ui:field="deleteButton"/>
+	                </g:VerticalPanel>
+	                <g:VerticalPanel styleName="bordered" width="100%">
+		                <g:Label styleName="smallFont" ui:field="dataLabel"/>
+		                <g:Label styleName="{style.margined}" ui:field="messageLabel"/>
+	                </g:VerticalPanel>
+	            </g:VerticalPanel>
+            </g:HorizontalPanel>
+        </g:HTMLPanel>
+</ui:UiBinder>

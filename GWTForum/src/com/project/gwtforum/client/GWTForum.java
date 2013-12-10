@@ -23,6 +23,8 @@ public class GWTForum implements EntryPoint{
 	private RegisterForm registerForm;
 	private CategoriesPage categoriesPage;
 	private AdminPage adminPage;
+	private ThreadsPage threadsPage;
+	private PostsPage postsPage;
 	
 	private AsyncCallback<ResponseRpc<Boolean>> adminCallback;
 	
@@ -81,6 +83,26 @@ public class GWTForum implements EntryPoint{
 		loadAdminPanel();
 	}
 	
+	private void openForum(String historyToken) {
+		String[] tokenParts = historyToken.split("-");
+		int forumId = Integer.parseInt(tokenParts[1]);
+		String forumName = tokenParts[2];
+		
+		threadsPage = new ThreadsPage(forumId, forumName);
+		
+		RootPanel.get("contents").add(threadsPage.getWidget());
+	}
+	
+	private void openThread(String historyToken) {
+		String[] tokenParts = historyToken.split("-");
+		int threadId = Integer.parseInt(tokenParts[2]);
+		String forumName = tokenParts[3];
+		
+		postsPage = new PostsPage(threadId, forumName);
+		
+		RootPanel.get("contents").add(postsPage.getWidget());
+	}
+	
 	private void loadAdminPanel() {
 		GWTFORUM_SERVICE.isAdmin(adminCallback);
 	}
@@ -101,8 +123,11 @@ public class GWTForum implements EntryPoint{
 			else if (token.equals("categories")) {
 				openCategories();
 			}
+			else if (token.contains("thread-")) {
+				openThread(token);
+			}
 			else if (token.contains("forum-")) {
-				// TODO parsuj numer forum i wyswietl forum o odpowiednim ID
+				openForum(token);
 			}
 		}
 	};

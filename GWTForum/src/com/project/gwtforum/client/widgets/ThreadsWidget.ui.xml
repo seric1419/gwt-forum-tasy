@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.margined {
+			margin-top: 10pt;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+	    <g:HorizontalPanel>
+	        <g:Label text="Forum - " styleName="categoryHeader"/>
+	        <g:Label ui:field="forumTitle" />
+	    </g:HorizontalPanel>
+		<g:VerticalPanel ui:field="threadPanel" width="100%"/>
+		<g:VerticalPanel styleName="{style.margined}">
+		    <g:TextBox ui:field="newThreadName"/>
+		    <g:Button ui:field="addThreadButton"/>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

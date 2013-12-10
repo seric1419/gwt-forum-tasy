@@ -22,6 +22,7 @@ import com.project.gwtforum.shared.ForumRpc;
 import com.project.gwtforum.shared.ReplyRpc;
 import com.project.gwtforum.shared.ResponseRpc;
 import com.project.gwtforum.shared.ThreadRpc;
+import com.project.gwtforum.shared.UserRpc;
 
 public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForumService{
 
@@ -40,7 +41,10 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 					for(Reply i : dbReplies){
 						ReplyRpc reply = new ReplyRpc();
 						reply.setId(i.getId());
+						reply.setAuthorId(i.getAuthorId());
 						reply.setName(i.getName());
+						reply.setMessage(i.getMessage());
+						reply.setCreated(i.getCreated());
 						responseCollection.add(reply);
 					}
 					response.setResponseCollection(responseCollection);
@@ -56,6 +60,71 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 		else {
 			response.setError(true);
 			response.addErrorMessage("notLoggedIn", "");
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<ReplyRpc> saveReply(ReplyRpc newReply) {
+		ResponseRpc<ReplyRpc> response = new ResponseRpc<>();
+		
+		if (isLoggedIn()) {
+			Reply reply = new Reply();
+			
+			reply.setName(newReply.getName());
+			reply.setThreadId(newReply.getThreadId());
+			reply.setAuthorId(SessionManager.getInstance().getUserIdFromSessionId((String) getThreadLocalRequest().getSession().getAttribute("sessionId")));
+			reply.setMessage(newReply.getMessage());
+			
+			try {
+				Database.getInstance().getRepliesDao().create(reply);
+				
+				response.setResponseCollection(getReplies(newReply.getThreadId()).getResponseCollection());
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+			}
+		}
+		else {
+			response.setError(true);
+			
+			if (isLoggedIn()) {
+				response.addErrorMessage("noPermissions", "");
+			}
+			else {
+				response.addErrorMessage("notLoggedIn", "");
+			}
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<ReplyRpc> deleteReply(int replyId) {
+		ResponseRpc<ReplyRpc> response = new ResponseRpc<>();
+		
+		if (isAdmin().getResponse()) {
+			try {
+				int threadId = Database.getInstance().getRepliesDao().queryForId(replyId).getThreadId();
+				
+				Database.getInstance().getRepliesDao().deleteById(replyId);
+				
+				response.setResponseCollection(getReplies(threadId).getResponseCollection());
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+			}
+		}
+		else {
+			response.setError(true);
+			
+			if (isLoggedIn()) {
+				response.addErrorMessage("noPermissions", "");
+			}
+			else {
+				response.addErrorMessage("notLoggedIn", "");
+			}
 		}
 		
 		return response;
@@ -90,6 +159,40 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 		else {
 			response.setError(true);
 			response.addErrorMessage("notLoggedIn", "");
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<ThreadRpc> saveThread(ThreadRpc newThread) {
+		ResponseRpc<ThreadRpc> response = new ResponseRpc<>();
+		
+		if (isAdmin().getResponse()) {
+			Thread thread = new Thread();
+			
+			thread.setName(newThread.getName());
+			thread.setForumId(newThread.getForumId());
+			thread.setAuthorId(SessionManager.getInstance().getUserIdFromSessionId((String) getThreadLocalRequest().getSession().getAttribute("sessionId")));
+			
+			try {
+				Database.getInstance().getThreadsDao().create(thread);
+				
+				response.setResponseCollection(getThreads(newThread.getForumId()).getResponseCollection());
+			} catch (SQLException e) {
+				response.setError(true);
+				response.addErrorMessage("unknown", e.getMessage());
+			}
+		}
+		else {
+			response.setError(true);
+			
+			if (isLoggedIn()) {
+				response.addErrorMessage("noPermissions", "");
+			}
+			else {
+				response.addErrorMessage("notLoggedIn", "");
+			}
 		}
 		
 		return response;
@@ -376,6 +479,25 @@ public class GWTForumServiceImpl extends RemoteServiceServlet implements GWTForu
 			response.setError(true);
 			response.addErrorMessage("notLoggedIn", "");
 			response.setResponse(false);
+		}
+		
+		return response;
+	}
+	
+	@Override
+	public ResponseRpc<UserRpc> getUser(int userId) {
+		ResponseRpc<UserRpc> response = new ResponseRpc<>();
+		
+		try {
+			UserRpc user = new UserRpc();
+			user.setNumerOfPosts(Database.getInstance().getRepliesDao().queryBuilder().where().eq("authorId", userId).query().size());
+			user.setName(Database.getInstance().getUsersDao().queryForId(userId).getLogin());
+			user.setId(userId);
+			
+			response.setResponse(user);
+		} catch (SQLException e) {
+			response.setError(true);
+			response.addErrorMessage("unknown", e.getMessage());
 		}
 		
 		return response;
