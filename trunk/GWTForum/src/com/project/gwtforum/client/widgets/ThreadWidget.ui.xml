@@ -1,11 +1,21 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-		
-	</ui:style>
-	<g:HTMLPanel>
-		<g:Label ui:field="threadTitle" />
-		<g:VerticalPanel ui:field="threadPanel"/>
+	
+    <ui:style>
+        .text {
+			font-size: 15pt;
+			font-weight: bold;
+			margin-left: 70px;
+			vertical-align: middle;
+		}
+		.panel {
+			padding: 15pt;
+			vertical-align: middle;
+		}
+    </ui:style>
+    
+	<g:HTMLPanel styleName="{style.panel}">
+		<g:Anchor styleName="{style.text}" ui:field="threadLink" width="100%"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 

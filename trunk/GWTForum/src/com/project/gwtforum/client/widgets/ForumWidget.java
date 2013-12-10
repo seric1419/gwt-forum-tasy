@@ -45,7 +45,7 @@ public class ForumWidget extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			History.newItem("forum-" + forumId);
+			History.newItem("forum-" + forumId + "-" + forumLink.getText());
 		}
 	};
 }

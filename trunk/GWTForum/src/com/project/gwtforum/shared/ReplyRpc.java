@@ -1,5 +1,7 @@
 package com.project.gwtforum.shared;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ReplyRpc implements IsSerializable {
@@ -9,6 +11,7 @@ public class ReplyRpc implements IsSerializable {
 	private int authorId;
 	private int threadId;
 	private String message;
+	private Date created;
 	
 	public ReplyRpc() {
 		
@@ -60,5 +63,13 @@ public class ReplyRpc implements IsSerializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 }

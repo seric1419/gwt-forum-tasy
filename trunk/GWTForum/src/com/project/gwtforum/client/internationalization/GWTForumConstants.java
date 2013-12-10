@@ -45,4 +45,10 @@ public interface GWTForumConstants extends Constants{
 	
 	@DefaultStringValue("Zapisz")
 	String save();
+	
+	@DefaultStringValue("Dodaj nowy")
+	String addNew();
+	
+	@DefaultStringValue("Usuń")
+	String delete();
 }

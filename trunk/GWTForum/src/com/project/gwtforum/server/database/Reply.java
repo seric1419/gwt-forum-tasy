@@ -1,5 +1,8 @@
 package com.project.gwtforum.server.database;
 
+import java.util.Date;
+
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -10,7 +13,7 @@ public class Reply {
 	@DatabaseField(generatedId = true)
 	private int id;
 	
-	@DatabaseField(canBeNull = false)
+	@DatabaseField
 	private String name;
 	
 	@DatabaseField(canBeNull = false)
@@ -22,8 +25,11 @@ public class Reply {
 	@DatabaseField(canBeNull = false)
 	private String message;
 	
+	@DatabaseField(dataType = DataType.DATE)
+	private Date created;
+	
 	public Reply() {
-		
+		created = new Date();
 	}
 	
 	public Reply(String name, int threadId, int authorId, String message) {
@@ -31,6 +37,7 @@ public class Reply {
 		this.threadId = threadId;
 		this.authorId = authorId;
 		this.message = message;
+		created = new Date();
 	}
 
 	public int getId() {
@@ -71,6 +78,14 @@ public class Reply {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 	
 }

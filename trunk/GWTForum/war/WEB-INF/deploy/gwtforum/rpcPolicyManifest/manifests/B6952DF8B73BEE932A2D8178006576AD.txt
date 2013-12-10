@@ -1,0 +1,2 @@
+serviceClass: com.project.gwtforum.client.GWTForumService
+path: 6161B8FE77D375E35C1821B3C5D175FC.gwt.rpc

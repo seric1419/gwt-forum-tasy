@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.margined {
+			margin-top: 30pt;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+	    <g:HorizontalPanel>
+	        <g:Label styleName="categoryHeader" text="Wątek - "/>
+	        <g:Label styleName="categoryHeader" ui:field="threadName"/>
+	    </g:HorizontalPanel>
+	    <g:VerticalPanel ui:field="postsPanel" width="100%"/>
+	    <g:VerticalPanel styleName="{style.margined}">
+	        <g:TextArea ui:field="newPostText" width="600px"/>
+	        <g:Button ui:field="newPostButton"/>
+	    </g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

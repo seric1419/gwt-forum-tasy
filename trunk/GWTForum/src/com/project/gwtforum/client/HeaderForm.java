@@ -86,6 +86,7 @@ public class HeaderForm {
 				if (!result.isError()) {
 					widget.setVisible(true);
 					RootPanel.get("adminPanel").clear();
+					History.newItem("index");
 				}
 				else {
 					InfoPopup.getInstance().setText(GWTForum.MESSAGES.unknownError());
